@@ -52,6 +52,12 @@ pip install -r backend/requirements.txt
 uvicorn backend.main:app --host 0.0.0.0 --port 3000 --reload
 ```
 
+If you are also using the RAG chatbot inside `backend/chatbot`, install its extra packages into the same backend virtual environment:
+
+```bash
+pip install -r backend/chatbot/chatbot-requirements.txt
+```
+
 ## Environment
 
 Create a root `.env` file with at least:
@@ -68,3 +74,4 @@ PORT=3000
 - The backend serves static assets from `frontend/`, including the `public/` reset pages.
 - Event images are stored in MongoDB and returned as base64 data URLs.
 - The current layout is intentionally folder-per-portal because the frontend relies on many relative file paths.
+- The chatbot lives under `backend/chatbot` and shares the backend Python environment.
