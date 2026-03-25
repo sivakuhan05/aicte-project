@@ -21,7 +21,8 @@ from pymongo import ReturnDocument
 from pymongo.errors import ConfigurationError
 
 APP_ROOT = Path(__file__).resolve().parent.parent
-PUBLIC_DIR = APP_ROOT / "public"
+FRONTEND_DIR = APP_ROOT / "frontend"
+PUBLIC_DIR = FRONTEND_DIR / "public"
 IMAGE_DIR = APP_ROOT / "image"
 
 load_dotenv(APP_ROOT / ".env")
@@ -2361,8 +2362,9 @@ async def delete_event(event_id: str):
 if IMAGE_DIR.exists():
     app.mount("/image", StaticFiles(directory=str(IMAGE_DIR)), name="image")
 
-if PUBLIC_DIR.exists():
-    app.mount("/", StaticFiles(directory=str(PUBLIC_DIR)), name="public")
+if FRONTEND_DIR.exists():
+    # Serve all static frontend assets (landing, student, organizer, admin, public) from one root.
+    app.mount("/", StaticFiles(directory=str(FRONTEND_DIR)), name="frontend")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Student Sign Up - Event</title>
+    <link rel="stylesheet" href="../shared/styles/auth.css">
+</head>
+<body>
+    <div class="auth-page">
+        <section class="auth-card">
+            <p class="eyebrow">Student portal</p>
+            <h1>Create student account</h1>
+            <p class="subtitle">Register with your student details and event interests to continue directly to the student dashboard.</p>
+
+            <form id="signup-form" class="form-grid">
+                <label class="field-group">
+                    <span class="field-label">Full Name</span>
+                    <div class="field">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2 1a4 4 0 0 1 4 4v1H2v-1a4 4 0 0 1 4-4h4Z"/>
+                        </svg>
+                        <input type="text" id="name" placeholder="Enter your full name" required>
+                    </div>
+                </label>
+
+                <label class="field-group">
+                    <span class="field-label">Email Address</span>
+                    <div class="field">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v.217l-8 4.8-8-4.8V4Zm0 1.383v6.617a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5.383l-7.646 4.588a1 1 0 0 1-1.03 0L0 5.383Z"/>
+                        </svg>
+                        <input type="email" id="email" placeholder="name@college.edu" required>
+                    </div>
+                </label>
+
+                <label class="field-group">
+                    <span class="field-label">Password</span>
+                    <div class="field">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 1a2 2 0 0 1 2 2v3H6V3a2 2 0 0 1 2-2Zm3 5V3a3 3 0 0 0-6 0v3a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2Z"/>
+                        </svg>
+                        <input type="password" id="password" placeholder="Create a password" required>
+                    </div>
+                </label>
+
+                <label class="field-group">
+                    <span class="field-label">Confirm Password</span>
+                    <div class="field">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 1a2 2 0 0 1 2 2v3H6V3a2 2 0 0 1 2-2Zm3 5V3a3 3 0 0 0-6 0v3a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2Z"/>
+                        </svg>
+                        <input type="password" id="confirm-password" placeholder="Re-enter password" required>
+                    </div>
+                </label>
+
+                <label class="field-group">
+                    <span class="field-label">Gender</span>
+                    <div class="field">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 1.75a3.75 3.75 0 1 0 2.316 6.701l1.014 1.013H10.5a.75.75 0 0 0 0 1.5h2.875a.75.75 0 0 0 .75-.75V7.34a.75.75 0 0 0-1.5 0v1.074L11.38 7.17A3.75 3.75 0 0 0 8 1.75ZM5.75 5.5a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0Z"/>
+                        </svg>
+                        <select id="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
+                </label>
+
+                <label class="field-group">
+                    <span class="field-label">Department</span>
+                    <div class="field">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8.211.5a.5.5 0 0 0-.422 0l-7 3A.5.5 0 0 0 .5 3.96V4h15v-.04a.5.5 0 0 0-.289-.46l-7-3ZM15 5H1v7.5a.5.5 0 0 0 .5.5H3V7.5a.5.5 0 0 1 1 0V13h2V7.5a.5.5 0 0 1 1 0V13h2V7.5a.5.5 0 0 1 1 0V13h2V7.5a.5.5 0 0 1 1 0V13h1.5a.5.5 0 0 0 .5-.5V5ZM0 14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-.5H0V14Z"/>
+                        </svg>
+                        <select id="department" required>
+                            <option value="">Select department</option>
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="MECH">MECH</option>
+                            <option value="ECE">ECE</option>
+                            <option value="AIML">AIML</option>
+                        </select>
+                    </div>
+                </label>
+
+                <div class="field-group full">
+                    <span class="field-label">Interested Event Domains</span>
+                    <div class="interest-grid">
+                        <label class="interest-option">
+                            <input type="checkbox" name="interest" value="Tech">
+                            <span>Tech</span>
+                        </label>
+                        <label class="interest-option">
+                            <input type="checkbox" name="interest" value="Non-Tech">
+                            <span>Non-Tech</span>
+                        </label>
+                        <label class="interest-option">
+                            <input type="checkbox" name="interest" value="Food">
+                            <span>Food</span>
+                        </label>
+                        <label class="interest-option">
+                            <input type="checkbox" name="interest" value="Sports">
+                            <span>Sports</span>
+                        </label>
+                        <label class="interest-option">
+                            <input type="checkbox" name="interest" value="Music">
+                            <span>Music</span>
+                        </label>
+                        <label class="interest-option">
+                            <input type="checkbox" name="interest" value="Arts">
+                            <span>Arts</span>
+                        </label>
+                        <label class="interest-option">
+                            <input type="checkbox" name="interest" value="General">
+                            <span>General</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-btn full-width-btn">Create Account</button>
+            </form>
+
+            <p class="text-link">Already have a student account? <a href="login.html">Log in</a></p>
+            <p class="text-link"><a href="../landing/web.html">Choose another portal</a></p>
+        </section>
+    </div>
+
+    <script src="student-shared.js"></script>
+    <script src="signup.js"></script>
+</body>
+</html>
