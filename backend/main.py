@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import base64
 import os
 import re
@@ -82,6 +83,22 @@ org_signins = None
 feedbacks = None
 admin_users = None
 student_notifications = None
+chatbot_startup_error: Optional[str] = None
+
+
+async def warmup_event_chatbot() -> None:
+    global chatbot_startup_error
+
+    try:
+        try:
+            from backend.chatbot.app.chatbot import refresh_chatbot_index
+        except ModuleNotFoundError:
+            from chatbot.app.chatbot import refresh_chatbot_index
+
+        await asyncio.to_thread(refresh_chatbot_index)
+        chatbot_startup_error = None
+    except Exception as exc:
+        chatbot_startup_error = str(exc)
 
 
 @app.on_event("startup")
@@ -115,6 +132,7 @@ async def startup() -> None:
 
     await _db.command("ping")
     await cleanup_expired_events()
+    await warmup_event_chatbot()
 
 
 @app.on_event("shutdown")
@@ -1829,6 +1847,49 @@ async def help_support(payload: Dict[str, Any] = Body(...)):
     return json_response(
         {"message": "Help and support request sent. You will be contacted shortly."}
     )
+
+
+@app.post("/chatbot/query")
+async def chatbot_query(request: Request, payload: Dict[str, Any] = Body(...)):
+    message = clean_text(payload.get("message"))
+    history = payload.get("history") if isinstance(payload.get("history"), list) else []
+    user_email = extract_auth_email(request)
+
+    if not message:
+        return json_response({"message": "Message is required."}, status_code=400)
+
+    try:
+        try:
+            from backend.chatbot.app.chatbot import ask_chatbot
+        except ModuleNotFoundError:
+            from chatbot.app.chatbot import ask_chatbot
+
+        answer = await asyncio.to_thread(
+            ask_chatbot,
+            question=message,
+            history=history,
+            user_email=user_email,
+        )
+        return json_response({"message": answer, "ready": True})
+    except FileNotFoundError as exc:
+        return json_response(
+            {
+                "message": "Chatbot knowledge base is not ready yet. Run ingest.py first.",
+                "error": str(exc),
+                "ready": False,
+            },
+            status_code=503,
+        )
+    except Exception as exc:
+        return json_response(
+            {
+                "message": "Chatbot is unavailable right now.",
+                "error": str(exc),
+                "startupError": chatbot_startup_error,
+                "ready": False,
+            },
+            status_code=503,
+        )
 
 
 @app.get("/events")
