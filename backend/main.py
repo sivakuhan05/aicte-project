@@ -91,11 +91,11 @@ async def warmup_event_chatbot() -> None:
 
     try:
         try:
-            from backend.chatbot.app.chatbot import warmup_chatbot
+            from backend.chatbot.app.chatbot import refresh_chatbot_index
         except ModuleNotFoundError:
-            from chatbot.app.chatbot import warmup_chatbot
+            from chatbot.app.chatbot import refresh_chatbot_index
 
-        await asyncio.to_thread(warmup_chatbot)
+        await asyncio.to_thread(refresh_chatbot_index)
         chatbot_startup_error = None
     except Exception as exc:
         chatbot_startup_error = str(exc)

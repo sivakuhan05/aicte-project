@@ -1,4 +1,5 @@
 import os
+import shutil
 from datetime import datetime
 from pathlib import Path
 
@@ -64,6 +65,8 @@ Description: {doc.get('eventDescription')}
 
 def build_storage_from_mongo():
     documents = load_events_from_mongo()
+    if STORAGE_DIR.exists():
+        shutil.rmtree(STORAGE_DIR)
     index = VectorStoreIndex.from_documents(documents)
     index.storage_context.persist(persist_dir=str(STORAGE_DIR))
     return len(documents)
