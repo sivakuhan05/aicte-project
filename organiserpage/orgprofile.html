@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Profile - Event</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="orgprofile.css">
+</head>
+<body>
+    <nav id="sidebar">
+        <ul>
+            <li>
+                <span class="logo">EVENT</span>
+                <button onclick="toggleSidebar()" id="toggle-btn" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-7">
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125Z" /></svg><span>Dashboard</span></a>
+            </li>
+            <li>
+                <a href="hostevent.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" /></svg><span>Host Event</span></a>
+            </li>
+            <li class="active">
+                <a href="orgprofile.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg><span>Profile</span></a>
+            </li>
+            <li>
+                <a href="organizedevent.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" /></svg><span>Organized Events</span></a>
+            </li>
+            <li>
+                <a href="afterevent.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 2.25A9.75 9.75 0 1 1 2.25 12 9.75 9.75 0 0 1 12 2.25Z" /></svg><span>After Event</span></a>
+            </li>
+            <li class="logout-item">
+                <a href="orglog.html"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" /></svg><span>Logout</span></a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="profile-shell container">
+            <div class="profile-hero">
+                <div class="profile-identity">
+                    <div class="profile-avatar" id="profile-avatar">CA</div>
+                    <div>
+                        <p class="eyebrow">Organization profile</p>
+                        <h1 id="profile-hero-name">Club / Association</h1>
+                        <p class="hero-copy">Login email is hidden here and only used for authentication.</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" id="edit-profile-btn">Edit Profile</button>
+            </div>
+
+            <div class="profile-grid" id="profile-view">
+                <article class="detail-card">
+                    <strong>Club / Association Name</strong>
+                    <p id="profile-association">Not set</p>
+                </article>
+                <article class="detail-card detail-card-full">
+                    <strong>About</strong>
+                    <p id="profile-bio">Not set</p>
+                </article>
+            </div>
+
+            <form id="profile-form" class="profile-form hidden">
+                <div class="profile-form-grid">
+                    <label class="full-width">
+                        Club / Association Name
+                        <input type="text" id="organizer-association" placeholder="Enter the club or association name" required>
+                    </label>
+                    <label class="full-width">
+                        About
+                        <textarea id="organizer-bio" rows="5" placeholder="Write a short description about the club or association"></textarea>
+                    </label>
+                </div>
+                <div class="form-actions profile-actions">
+                    <button type="button" class="btn-outline" id="cancel-profile-btn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="sidebar.js"></script>
+    <script>
+        function getInitials(name) {
+            return (name || 'Club Association')
+                .split(' ')
+                .filter(Boolean)
+                .slice(0, 2)
+                .map((part) => part[0].toUpperCase())
+                .join('') || 'CA';
+        }
+
+        async function loadProfile() {
+            const organizerUsername = localStorage.getItem('organizerUsername');
+            let organizerAssociation = localStorage.getItem('organizerAssociation')
+                || localStorage.getItem('organizerOrganization')
+                || 'Not set';
+            let organizerBio = localStorage.getItem('organizerBio') || 'Not set';
+
+            if (organizerUsername) {
+                try {
+                    const response = await fetch(`http://localhost:3000/organizer/profile/${encodeURIComponent(organizerUsername)}`);
+                    const profile = await response.json();
+                    if (response.ok) {
+                        organizerAssociation = profile.clubAssociation || organizerAssociation;
+                        organizerBio = profile.bio || organizerBio;
+                        localStorage.setItem('organizerAssociation', organizerAssociation || 'Not set');
+                        localStorage.setItem('organizerBio', organizerBio || 'Not set');
+                    }
+                } catch (error) {
+                    console.error('Failed to load organization profile:', error);
+                }
+            }
+
+            document.getElementById('profile-hero-name').textContent = organizerAssociation;
+            document.getElementById('profile-avatar').textContent = getInitials(organizerAssociation);
+
+            document.getElementById('profile-association').textContent = organizerAssociation;
+            document.getElementById('profile-bio').textContent = organizerBio;
+
+            document.getElementById('organizer-association').value = organizerAssociation === 'Not set' ? '' : organizerAssociation;
+            document.getElementById('organizer-bio').value = organizerBio === 'Not set' ? '' : organizerBio;
+        }
+
+        function toggleEditMode(showEditor) {
+            document.getElementById('profile-view').classList.toggle('hidden', showEditor);
+            document.getElementById('profile-form').classList.toggle('hidden', !showEditor);
+            document.getElementById('edit-profile-btn').textContent = showEditor ? 'Close Editor' : 'Edit Profile';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const organizerUsername = localStorage.getItem('organizerUsername');
+            if (!organizerUsername) {
+                window.location.href = 'orglog.html';
+                return;
+            }
+
+            loadProfile();
+            toggleEditMode(false);
+
+            document.getElementById('edit-profile-btn').addEventListener('click', () => {
+                const formHidden = document.getElementById('profile-form').classList.contains('hidden');
+                if (formHidden) {
+                    loadProfile();
+                }
+                toggleEditMode(formHidden);
+            });
+
+            document.getElementById('cancel-profile-btn').addEventListener('click', () => {
+                loadProfile();
+                toggleEditMode(false);
+            });
+
+            document.getElementById('profile-form').addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const clubAssociation = document.getElementById('organizer-association').value.trim();
+                const bio = document.getElementById('organizer-bio').value.trim();
+
+                if (!clubAssociation) {
+                    alert('Please enter the club or association name.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('http://localhost:3000/organizer/profile', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            username: organizerUsername,
+                            clubAssociation,
+                            bio
+                        })
+                    });
+                    const result = await response.json();
+                    if (!response.ok) {
+                        throw new Error(result.message || 'Failed to update organization profile.');
+                    }
+
+                    localStorage.setItem('organizerAssociation', result.organizer.clubAssociation || 'Not set');
+                    localStorage.setItem('organizerBio', result.organizer.bio || 'Not set');
+                    await loadProfile();
+                    toggleEditMode(false);
+                } catch (error) {
+                    console.error('Failed to update organization profile:', error);
+                    alert(error.message || 'Failed to update organization profile.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

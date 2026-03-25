@@ -1,0 +1,129 @@
+.profile-shell {
+    display: grid;
+    gap: 1.35rem;
+}
+
+.profile-identity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-hero h1 {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+.profile-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    color: var(--accent-strong);
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.hero-copy {
+    color: var(--muted);
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.detail-card {
+    padding: 1.2rem;
+    border-radius: 22px;
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+}
+
+.detail-card strong {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+}
+
+.detail-card p {
+    color: var(--text);
+    line-height: 1.7;
+}
+
+.detail-card-full {
+    grid-column: 1 / -1;
+}
+
+.profile-form {
+    border-radius: 22px;
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+    padding: 1.2rem;
+}
+
+.profile-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.profile-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent-strong);
+}
+
+.profile-form input,
+.profile-form textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(92, 98, 86, 0.12);
+}
+
+.profile-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.profile-form .full-width {
+    grid-column: 1 / -1;
+}
+
+.profile-actions {
+    justify-content: flex-end;
+}
+
+@media (max-width: 800px) {
+    .profile-grid,
+    .profile-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-card-full,
+    .profile-form .full-width {
+        grid-column: auto;
+    }
+}

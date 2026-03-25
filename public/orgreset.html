@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Organization Reset Password | Event</title>
+    <link rel="stylesheet" href="../userpage/auth.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="auth-page">
+        <section class="auth-card compact">
+            <p class="eyebrow">Organization portal</p>
+            <h1>Reset Password</h1>
+            <p class="subtitle">Enter your new organization password to finish the reset.</p>
+
+            <form id="reset-password-form" class="auth-form">
+                <label class="field-group">
+                    <span class="field-label">New Password</span>
+                    <div class="field">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 1a2 2 0 0 1 2 2v3H6V3a2 2 0 0 1 2-2Zm3 5V3a3 3 0 0 0-6 0v3a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2Z"/>
+                        </svg>
+                        <input type="password" id="password" placeholder="Enter new password" required minlength="8" />
+                    </div>
+                </label>
+                <label class="field-group">
+                    <span class="field-label">Confirm Password</span>
+                    <div class="field">
+                        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 1a2 2 0 0 1 2 2v3H6V3a2 2 0 0 1 2-2Zm3 5V3a3 3 0 0 0-6 0v3a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2Z"/>
+                        </svg>
+                        <input type="password" id="confirm-password" placeholder="Confirm new password" required minlength="8" />
+                    </div>
+                </label>
+                <button class="primary-btn" type="submit">Reset Password</button>
+            </form>
+            <p class="text-link">Back to <a href="../organiserpage/orglog.html">Log in</a></p>
+            <p class="text-link"><a href="../homepage/web.html">Choose another portal</a></p>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById("reset-password-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get("token");
+            const email = urlParams.get("email");
+
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirm-password").value.trim();
+            const btn = document.querySelector("#reset-password-form button");
+
+            if (!token || !email) {
+                alert("Invalid or expired reset link. Please request a new one.");
+                return;
+            }
+
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            try {
+                btn.disabled = true;
+                btn.textContent = "Resetting...";
+
+                const response = await fetch("http://localhost:3000/org/reset-password", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ token, email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || data.error || "Failed to reset password");
+                }
+
+                alert("Password has been reset successfully!");
+                window.location.href = "../organiserpage/orglog.html";
+            } catch (err) {
+                console.error("Error:", err);
+                alert(err.message || "An error occurred while resetting your password.");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Reset Password";
+            }
+        });
+    </script>
+</body>
+</html>
