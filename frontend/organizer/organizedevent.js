@@ -152,7 +152,6 @@ function renderEvents(events) {
                     ${event._id ? '<button class="btn-outline edit-event-btn" type="button">Edit Event</button>' : ''}
                     <button class="btn-outline view-details-btn" type="button">View Details</button>
                     <button class="btn-outline view-feedback-btn" type="button">View Feedback</button>
-                    ${isPastEvent && !completion ? '<button class="btn-primary complete-btn" type="button">Add Completion Details</button>' : ''}
                 </div>
                 <div class="event-extra hidden">
                     <div class="detail-grid">
@@ -166,21 +165,6 @@ function renderEvents(events) {
                         <p>${escapeHtml(event.eventDescription || 'No event description available.')}</p>
                         ${completion && completion.feedback ? `<p><strong>Club / Association summary:</strong> ${escapeHtml(completion.feedback)}</p>` : '<p><strong>Club / Association summary:</strong> Not submitted yet.</p>'}
                     </div>
-                    ${isPastEvent && !completion ? `
-                        <form class="completion-form">
-                            <label>
-                                Participants participated
-                                <input type="number" name="participantsParticipated" min="0" required placeholder="Enter attended count">
-                            </label>
-                            <label>
-                                Overall feedback
-                                <textarea name="feedback" rows="4" required placeholder="Write the club or association summary for this event"></textarea>
-                            </label>
-                            <div class="form-actions">
-                                <button class="btn-primary submit-completion-btn" type="submit">Save Completion</button>
-                            </div>
-                        </form>
-                    ` : ''}
                 </div>
                 <div class="feedback-panel hidden"></div>
             </div>
@@ -188,11 +172,9 @@ function renderEvents(events) {
 
         const detailsButton = eventCard.querySelector('.view-details-btn');
         const feedbackButton = eventCard.querySelector('.view-feedback-btn');
-        const completionButton = eventCard.querySelector('.complete-btn');
         const editButton = eventCard.querySelector('.edit-event-btn');
         const extraPanel = eventCard.querySelector('.event-extra');
         const feedbackPanel = eventCard.querySelector('.feedback-panel');
-        const completionForm = eventCard.querySelector('.completion-form');
 
         if (editButton) {
             editButton.addEventListener('click', () => {
@@ -224,47 +206,6 @@ function renderEvents(events) {
             feedbackPanel.classList.toggle('hidden');
             feedbackButton.textContent = feedbackPanel.classList.contains('hidden') ? 'View Feedback' : 'Hide Feedback';
         });
-
-        if (completionButton) {
-            completionButton.addEventListener('click', () => {
-                extraPanel.classList.remove('hidden');
-                detailsButton.textContent = 'Hide Details';
-                const input = eventCard.querySelector('input[name="participantsParticipated"]');
-                if (input) {
-                    input.focus();
-                }
-            });
-        }
-
-        if (completionForm) {
-            completionForm.addEventListener('submit', async (submitEvent) => {
-                submitEvent.preventDefault();
-                const formData = new FormData(completionForm);
-                const participantsParticipated = formData.get('participantsParticipated');
-                const feedback = formData.get('feedback');
-
-                try {
-                    const response = await fetch(`http://localhost:3000/events/${event._id}/completion`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ participantsParticipated, feedback })
-                    });
-                    const result = await response.json();
-                    if (!response.ok) {
-                        throw new Error(result.message || 'Failed to save completion');
-                    }
-
-                    event.completion = result.event && result.event.completion ? result.event.completion : {
-                        participantsParticipated: Number(participantsParticipated),
-                        feedback
-                    };
-                    renderEvents(sortedEvents);
-                } catch (error) {
-                    console.error('Error saving completion:', error);
-                    alert(error.message || 'Failed to save completion details.');
-                }
-            });
-        }
 
         eventList.appendChild(eventCard);
     });

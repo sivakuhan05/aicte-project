@@ -57,7 +57,9 @@ function renderCompletedEvents(events) {
             <h5>${adminApp.escapeHtml(event.eventName || 'Untitled event')}</h5>
             <p class="meta-line">${adminApp.escapeHtml(adminApp.formatDateTime(event.eventDate))}</p>
             <p class="meta-line">Registered: ${Number(event.participantCount) || 0} | Attended: ${Number(event.attendedCount) || 0}</p>
+            <p class="meta-line">Student feedback: ${Number(event.feedbackCount) || 0}</p>
             <div class="rating-block">${adminApp.buildStarMarkup(event.averageRating, event.ratingCount)}</div>
+            <p class="page-note"><strong>Organizer summary:</strong> ${adminApp.escapeHtml(event.completion?.feedback || 'Not submitted yet.')}</p>
         </div>
     `).join('');
 }

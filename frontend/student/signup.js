@@ -1,6 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const studentApp = window.EventStudent;
     const form = document.getElementById('signup-form');
+    const currentYear = new Date().getFullYear() % 100;
+    const allowedYears = new Set(Array.from({ length: 5 }, (_, index) => String((currentYear - index + 100) % 100).padStart(2, '0')));
+
+    function isValidPsgEmail(email) {
+        const trimmedEmail = String(email || '').trim().toLowerCase();
+        const match = trimmedEmail.match(/^(\d{2})([a-z])(\d{3})@psgtech\.ac\.in$/i);
+        return Boolean(match && allowedYears.has(match[1]));
+    }
+
     if (!form) {
         return;
     }
@@ -24,6 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!interests.length) {
             alert('Please choose at least one interested event domain.');
+            return;
+        }
+
+        if (!isValidPsgEmail(payload.email)) {
+            alert('Use a valid PSG email like 23z213@psgtech.ac.in with a joining year from the last 5 years.');
             return;
         }
 

@@ -33,9 +33,12 @@ function buildCardMarkup(event) {
                 <strong>Applied</strong>
                 <span>${Number(event.participantCount) || 0}</span>
             </div>
-            <button class="btn-primary afterevent-toggle" type="button">Add Feedback</button>
+            <div class="info-card">
+                <strong>Feedback</strong>
+                <span>${Number(event.feedbackCount) || 0}</span>
+            </div>
         </div>
-        <div class="afterevent-form hidden">
+        <div class="afterevent-form">
             <label>
                 Participants participated
                 <input type="number" name="participantsParticipated" min="0" placeholder="Enter attended count" required>
@@ -94,29 +97,26 @@ function renderPendingEvents(events, list) {
         card.className = 'event-item-compact afterevent-card';
         card.innerHTML = buildCardMarkup(event);
 
-        const toggleButton = card.querySelector('.afterevent-toggle');
         const formPanel = card.querySelector('.afterevent-form');
         const submitButton = card.querySelector('.afterevent-submit');
-
-        toggleButton.addEventListener('click', () => {
-            formPanel.classList.toggle('hidden');
-            toggleButton.textContent = formPanel.classList.contains('hidden') ? 'Add Feedback' : 'Hide Form';
-        });
 
         submitButton.addEventListener('click', async () => {
             const participantsParticipated = formPanel.querySelector('input[name="participantsParticipated"]').value;
             const feedback = formPanel.querySelector('textarea[name="feedback"]').value.trim();
+            const parsedParticipants = Number(participantsParticipated);
 
-            if (!participantsParticipated || !feedback) {
+            if (participantsParticipated === '' || Number.isNaN(parsedParticipants) || parsedParticipants < 0 || !feedback) {
                 alert('Please enter participated count and the club or association summary.');
                 return;
             }
 
             try {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Saving...';
                 const response = await fetch(`http://localhost:3000/events/${event._id}/completion`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ participantsParticipated, feedback })
+                    body: JSON.stringify({ participantsParticipated: parsedParticipants, feedback })
                 });
                 const result = await response.json();
                 if (!response.ok) {
@@ -130,6 +130,9 @@ function renderPendingEvents(events, list) {
             } catch (error) {
                 console.error('Error saving feedback:', error);
                 alert(error.message || 'Failed to save the club or association summary.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Feedback';
             }
         });
 

@@ -221,6 +221,20 @@ def clean_text(value: Any) -> str:
     return str(value or "").strip()
 
 
+def valid_psg_email_years(reference: Optional[datetime] = None) -> set[str]:
+    now = reference or datetime.utcnow()
+    current_year = now.year % 100
+    return {f"{(current_year - offset) % 100:02d}" for offset in range(5)}
+
+
+def is_valid_psg_email(email: Any) -> bool:
+    cleaned_email = clean_text(email).lower()
+    match = re.fullmatch(r"(\d{2})([a-zA-Z])(\d{3})@psgtech\.ac\.in", cleaned_email)
+    if not match:
+        return False
+    return match.group(1) in valid_psg_email_years()
+
+
 def normalize_interest(value: Any) -> str:
     interest = clean_text(value).lower()
     if "sport" in interest or interest in {"port", "ports"}:
@@ -948,6 +962,14 @@ async def student_register(payload: Dict[str, Any] = Body(...)):
     if password != confirm_password:
         return json_response({"message": "Passwords do not match"}, status_code=400)
 
+    if not is_valid_psg_email(email):
+        return json_response(
+            {
+                "message": "Use a valid PSG email like 23z213@psgtech.ac.in with a joining year from the last 5 years."
+            },
+            status_code=400,
+        )
+
     if not interests:
         return json_response(
             {"message": "Select at least one interested event domain."},
@@ -1039,6 +1061,12 @@ async def login(payload: Dict[str, Any] = Body(...)):
     if not email or not password:
         return json_response(
             {"message": "Please provide both email and password."},
+            status_code=400,
+        )
+
+    if not is_valid_psg_email(email):
+        return json_response(
+            {"message": "This mail is not supported. Use college mail."},
             status_code=400,
         )
 
@@ -1181,6 +1209,14 @@ async def org_register(payload: Dict[str, Any] = Body(...)):
     if not username or not email or not password or not club_association:
         return json_response(
             {"message": "Name, email, password, and club / association are required."},
+            status_code=400,
+        )
+
+    if not is_valid_psg_email(email):
+        return json_response(
+            {
+                "message": "Use a valid PSG email like 23z213@psgtech.ac.in with a joining year from the last 5 years."
+            },
             status_code=400,
         )
 

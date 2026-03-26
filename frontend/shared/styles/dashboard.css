@@ -465,6 +465,34 @@ main {
     box-shadow: 0 10px 24px rgba(42, 37, 32, 0.05);
 }
 
+.afterevent-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
+    align-items: start;
+}
+
+.afterevent-card .afterevent-top {
+    align-items: center;
+}
+
+.afterevent-card .event-content {
+    min-width: 0;
+}
+
+.afterevent-card .afterevent-form {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+.afterevent-card .afterevent-form input,
+.afterevent-card .afterevent-form textarea,
+.afterevent-card .afterevent-form button {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+}
+
 button.event-item-compact {
     text-align: left;
     cursor: pointer;
@@ -856,6 +884,10 @@ button.event-item-compact {
 
     #sidebar ul {
         gap: 0.35rem;
+    }
+
+    .afterevent-card {
+        grid-template-columns: 1fr;
     }
 
     .dashboard-header h1,

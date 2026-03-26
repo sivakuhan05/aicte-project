@@ -1,3 +1,17 @@
+const organizerSessionKeys = [
+    'organizerUsername',
+    'organizerEmail',
+    'organizerAssociation',
+    'organizerBio',
+    'organizerApprovalStatus'
+];
+
+function clearOrganizerSession() {
+    organizerSessionKeys.forEach((key) => localStorage.removeItem(key));
+}
+
+clearOrganizerSession();
+
 document.getElementById('form').addEventListener('submit', async (event) => {
     event.preventDefault();
 

@@ -24,6 +24,7 @@ function buildMyEventCard(eventItem) {
     const clubAssociation = eventItem.clubAssociation || 'Open to All';
     const feedbackData = eventItem.studentFeedback || null;
     const selectedRating = Number(feedbackData?.rating) || 0;
+    const showRegistrationButton = isUpcoming && Boolean(eventItem.externalFormUrl);
 
     function getFeedbackButtonLabel() {
         return eventItem.studentFeedback && eventItem.studentFeedback.feedback
@@ -53,7 +54,7 @@ function buildMyEventCard(eventItem) {
             </div>
             <div class="event-actions">
                 <button type="button" class="btn-outline view-details-btn">View Event Details</button>
-                <button type="button" class="btn-primary open-link-btn"${eventItem.externalFormUrl ? '' : ' disabled'}>${eventItem.externalFormUrl ? 'Open Registration URL' : 'No URL Added'}</button>
+                ${showRegistrationButton ? '<button type="button" class="btn-primary open-link-btn">Open Registration URL</button>' : ''}
                 ${isUpcoming ? '' : `<button type="button" class="btn-outline feedback-toggle-btn">${getFeedbackButtonLabel()}</button>`}
             </div>
             <div class="event-extra hidden">
@@ -67,6 +68,7 @@ function buildMyEventCard(eventItem) {
                     <p>${studentApp.escapeHtml(eventItem.eventDescription || 'No event description available.')}</p>
                     <p><strong>Location:</strong> ${studentApp.escapeHtml(eventItem.eventLocation || 'Location pending')}</p>
                     <p><strong>Registration link:</strong> ${eventItem.externalFormUrl ? 'Saved from organizer event form.' : 'Organizer has not added a registration URL yet.'}</p>
+                    ${!isUpcoming && eventItem.completion?.feedback ? `<p><strong>Organizer summary:</strong> ${studentApp.escapeHtml(eventItem.completion.feedback)}</p>` : ''}
                 </div>
                 ${isUpcoming ? '' : `
                     <form class="student-feedback-form hidden">
@@ -107,7 +109,7 @@ function buildMyEventCard(eventItem) {
             : 'Hide Event Details';
     });
 
-    if (eventItem.externalFormUrl) {
+    if (openLinkButton && eventItem.externalFormUrl) {
         openLinkButton.addEventListener('click', () => {
             window.location.href = eventItem.externalFormUrl;
         });
@@ -141,6 +143,10 @@ function buildMyEventCard(eventItem) {
             }
 
             try {
+                if (feedbackSubmitButton) {
+                    feedbackSubmitButton.disabled = true;
+                    feedbackSubmitButton.textContent = 'Saving...';
+                }
                 const result = await studentApp.fetchJson(`${studentApp.API_BASE}/submit-feedback`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -168,6 +174,11 @@ function buildMyEventCard(eventItem) {
             } catch (error) {
                 console.error('Failed to submit feedback:', error);
                 alert(error.message || 'Failed to submit feedback right now.');
+            } finally {
+                if (feedbackSubmitButton) {
+                    feedbackSubmitButton.disabled = false;
+                    feedbackSubmitButton.textContent = getFeedbackButtonLabel();
+                }
             }
         });
     }

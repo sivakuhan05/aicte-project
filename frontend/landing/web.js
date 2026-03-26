@@ -49,5 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  setRole('student');
+  const params = new URLSearchParams(window.location.search);
+  const initialRole = params.get('portal');
+  setRole(roles[initialRole] ? initialRole : 'student');
 });
